@@ -1,0 +1,1 @@
+create table orders(ID INT PRIMARY KEY, NAME varchar(100));
