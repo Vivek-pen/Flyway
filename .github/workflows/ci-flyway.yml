@@ -60,6 +60,12 @@ jobs:
           name: flyway-history
           path: flyway_history.sql
 
+      - name: Show Flyway schema history
+        run: |
+          docker exec ${{ job.services.mysql.id }} \
+            mysql -uroot -p"Welcome@1234$" -e "SELECT * FROM flywaydb.flyway_schema_history;"
+
+
 
       - name: Build the Spring Boot project
         run: mvn -B clean package -DskipTests
