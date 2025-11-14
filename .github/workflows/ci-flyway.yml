@@ -49,6 +49,18 @@ jobs:
             -Dflyway.user=root \
             -Dflyway.password="Welcome@1234$"
 
+      - name: Export Flyway schema history
+        run: |
+          docker exec ${{ job.services.mysql.id }} \
+          mysqldump -uroot -p"Welcome@1234$" flywaydb flyway_schema_history > flyway_history.sql
+
+      - name: Upload Flyway History Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: flyway-history
+          path: flyway_history.sql
+
+
       - name: Build the Spring Boot project
         run: mvn -B clean package -DskipTests
 
